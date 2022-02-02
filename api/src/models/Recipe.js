@@ -14,17 +14,21 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    resume: {
+    summary: {
       type: DataTypes.TEXT,
     },
     puntuation: {
       type: DataTypes.DECIMAL,
     },
     healthyFoodLevel: {
-      type: DataTypes.STRING,
+      type: DataTypes.DECIMAL,
     },
     stebByStep: {
       type: DataTypes.TEXT,
+    },
+    image:{
+      type:DataTypes.STRING,
+      allowNull:false,
     },
     createdByDb: {
       type: DataTypes.BOOLEAN,
