@@ -26,9 +26,12 @@ module.exports = (sequelize) => {
     stebByStep: {
       type: DataTypes.TEXT,
     },
-    image:{
-      type:DataTypes.STRING,
-      allowNull:false,
+    // dietType: {
+    //   type: DataTypes.STRING,
+    // },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     createdByDb: {
       type: DataTypes.BOOLEAN,
