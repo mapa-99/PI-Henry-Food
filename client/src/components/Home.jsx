@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import getRecipes from "../redux/actions";
+import { getRecipes } from "../redux/actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 
@@ -46,9 +46,20 @@ const Home = () => {
         </select>
       </div>
       {allRecipes &&
-        allRecipes.map((rec) => (
-          <Card name={rec.name} image={rec.image} diet={rec.dietType} />
-        ))}
+        allRecipes.map((rec) => {
+          return (
+            <div>
+              <Link to={"/home" + rec.id}>
+                <Card
+                  name={rec.name}
+                  image={rec.image}
+                  diet={rec.dietType}
+                  key={rec.id}
+                />
+              </Link>
+            </div>
+          );
+        })}
     </div>
   );
 };

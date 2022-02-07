@@ -1,13 +1,15 @@
 import axios from "axios";
 
-const getRecipes = () => {
+export function getRecipes() {
   return async function (dispatch) {
-    let json = await axios.get("http://localhost:3001/recipes");
-    return dispatch({
-      type: "GET_RECIPES",
-      payload: json.data,
-    });
+    try {
+      var json = await axios.get("http://localhost:3001/recipes", {});
+      return dispatch({
+        type: "GET_RECIPES",
+        payload: json.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
-};
-
-export default getRecipes;
+}
