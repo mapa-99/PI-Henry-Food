@@ -1,10 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterRecipesByDiet, getRecipes, orderByName } from "../redux/actions";
+import { filterRecipesByDiet, getRecipes, orderByName, orderByPuntuation } from "../redux/actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import Pagination from "./Pagination";
+import SearchBar from "./SearchBar";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,12 @@ const Home = () => {
     setCurrentPage(1);
     setOrder(`Ordenado ${e.target.value}`);
   };
+  const handleSortPuntuation = (e) => {
+    e.preventDefault();
+    dispatch(orderByPuntuation(e.target.value));
+    setCurrentPage(1);
+    setOrder(`Ordenado ${e.target.value}`);
+  };
   return (
     <div>
       <Link to="/recipe">Crear receta bien mela</Link>
@@ -59,7 +66,7 @@ const Home = () => {
         {/* Por puntuación */}
         <p>Puntuación</p>
         
-        <select>
+        <select onChange={(e) => handleSortPuntuation(e)}>
           <option value="numAsc">Ascendente</option>
           <option value="numDesc">Descendente</option>
         </select>
@@ -81,6 +88,7 @@ const Home = () => {
         paginado={paginado}
         recipesPerPage={recipesPerPage}
       />
+      <SearchBar/>
       {currentRecipes &&
         currentRecipes.map((rec) => {
           return (
