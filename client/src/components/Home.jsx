@@ -1,7 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterRecipesByDiet, getRecipes, orderByName, orderByPuntuation } from "../redux/actions";
+import {
+  filterRecipesByDiet,
+  getRecipes,
+  orderByName,
+  orderByPuntuation,
+  getDiets,
+} from "../redux/actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import Pagination from "./Pagination";
@@ -16,10 +22,13 @@ const Home = () => {
   const indexLastRecipe = currentPage + recipesPerPage;
   const indexFirstRecipe = indexLastRecipe - recipesPerPage;
   const currentRecipes = allRecipes.slice(indexFirstRecipe, indexLastRecipe);
+  const diets = useSelector((state) => state.diets);
 
+  // console.log("diets value...", diets);
   useEffect(() => {
+    dispatch(getDiets());
     dispatch(getRecipes());
-  }, [dispatch]);
+  }, []);
 
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -65,22 +74,20 @@ const Home = () => {
         </select>
         {/* Por puntuación */}
         <p>Puntuación</p>
-        
+
         <select onChange={(e) => handleSortPuntuation(e)}>
           <option value="numAsc">Ascendente</option>
           <option value="numDesc">Descendente</option>
         </select>
         <p>Filtrar por Dieta</p>
 
-        <select
-          onChange={(e) => handleFilterDiet(e)}
-          style={{ backgroundColor: "red" }}
-        >
+        <select onChange={(e) => handleFilterDiet(e)}>
           <option value="all">Todas</option>
-          <option value="gluten free">Gluten free</option>
-          <option value="vegetarian">Vegetarian</option>
-          {/* <option value=""></option>
-          <option value=""></option> */}
+          {diets.map((diet) => (
+            <option value={diet.name} key={diet.id}>
+              {diet.name}
+            </option>
+          ))}
         </select>
       </div>
       <Pagination
@@ -88,18 +95,13 @@ const Home = () => {
         paginado={paginado}
         recipesPerPage={recipesPerPage}
       />
-      <SearchBar/>
+      <SearchBar />
       {currentRecipes &&
         currentRecipes.map((rec) => {
           return (
-            <div>
+            <div key={rec.id}>
               <Link to={"/home/" + rec.id}>
-                <Card
-                  name={rec.name}
-                  image={rec.image}
-                  diet={rec.dietType}
-                  key={rec.id}
-                />
+                <Card name={rec.name} image={rec.image} diet={rec.dietType} />
               </Link>
             </div>
           );

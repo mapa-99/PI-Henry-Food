@@ -1,11 +1,22 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getDiets, postRecipe } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+
+const validation = (input) => {
+  let errors = {};
+  if (!input.name) errors.name = "El nombre es obligatorio!";
+  else if (!input.summary)
+    errors.summary = "El resumen de la receta es obligatoria!";
+  return errors;
+};
 const RecipeForm = () => {
   const dispatch = useDispatch();
+  const history = useNavigate();
   const diets = useSelector((state) => state.diets);
+
+  const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
     name: "",
     summary: "",
@@ -23,6 +34,47 @@ const RecipeForm = () => {
       ...input,
       [event.target.name]: event.target.value,
     });
+    setErrors(
+      validation({
+        ...input,
+        [event.target.name]: event.target.value,
+      })
+    );
+    console.log(input);
+  };
+  // const handleCheck = (event) => {
+  //   event.target.checked &&
+  //     setInput({
+  //       ...input,
+  //       dietType: [...input.dietType, event.target.value],
+  //     });
+  // };
+  const handleSelect = (event) => {
+    setInput({
+      ...input,
+      dietType: [...input.dietType, event.target.value],
+    });
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(input);
+    dispatch(postRecipe(input));
+    alert("Receta Creada exitosamente!");
+    setInput({
+      name: "",
+      summary: "",
+      puntuation: 0,
+      dietType: [],
+      image: "",
+      stepByStep: "",
+    });
+    history("/home");
+  };
+  const handleDelete = (element) => {
+    setInput({
+      ...input,
+      dietType: input.dietType.filter((diet) => diet !== element),
+    });
   };
   return (
     <div>
@@ -39,6 +91,11 @@ const RecipeForm = () => {
             name="name"
             onChange={handleChange}
           />
+          {errors.name && (
+            <p>
+              <b>{errors.name}</b>
+            </p>
+          )}
         </div>
         <div>
           <label>Puntuación: </label>
@@ -53,8 +110,8 @@ const RecipeForm = () => {
           <label>url de la Imagen de la receta: </label>
           <input
             type="text"
-            value={input.name}
-            name="name"
+            value={input.image}
+            name="image"
             onChange={handleChange}
           />
         </div>
@@ -65,6 +122,11 @@ const RecipeForm = () => {
             name="summary"
             onChange={handleChange}
           />
+          {errors.summary && (
+            <p>
+              <b>{errors.summary}</b>
+            </p>
+          )}
         </div>
         <div>
           <label>Paso a paso: </label>
@@ -74,12 +136,39 @@ const RecipeForm = () => {
             onChange={handleChange}
           />
         </div>
-        <select>
+        <br />
+        {/* <div>
+          {diets.map((diet) => (
+            <label key={diet.id}>
+              <input
+                type="checkbox"
+                name={diet.name}
+                value={diet.name}
+                onChange={(e) => handleChange(e)}
+              />
+              {diet.name}
+            </label>
+          ))}
+        </div> */}
+        <select onChange={(event) => handleSelect(event)}>
+          <option value="all"> Todas</option>
           {diets.map((diet) => (
             <option value={diet.name}>{diet.name}</option>
           ))}
         </select>
-        <button type="submit"> Crear receta!</button>
+
+        <p>
+          {input.dietType.map((element) => (
+            <>
+              <b>{element}</b>
+              <button onClick={() => handleDelete(e)}>✖</button>
+            </>
+          ))}
+        </p>
+
+        <button type="submit" onClick={(event) => handleSubmit(event)}>
+          Crear receta!
+        </button>
       </form>
     </div>
   );

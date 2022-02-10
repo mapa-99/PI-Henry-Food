@@ -69,3 +69,17 @@ export function orderByPuntuation(payload) {
     payload,
   };
 }
+
+export function getRecipeDetail(id) {
+  return async function (dispatch) {
+    try {
+      var info = await axios.get(`http://localhost:3001/recipes/${id}`);
+      return dispatch({
+        type: "GET_RECIPE_DETAIL",
+        payload: info.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}

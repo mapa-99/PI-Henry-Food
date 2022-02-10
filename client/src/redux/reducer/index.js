@@ -2,6 +2,7 @@ const initialState = {
   recipes: [],
   allRecipes: [],
   diets: [],
+  detail: [],
 };
 function rootReducer(state = initialState, action) {
   const { type, payload } = action;
@@ -26,42 +27,38 @@ function rootReducer(state = initialState, action) {
       const dietFilter =
         payload === "all"
           ? allRecipes
-          : allRecipes.filter((rec) => rec.diets.includes(payload));
+          : allRecipes.filter((rec) => rec.dietType.includes(payload));
       return {
         ...state,
         recipes: dietFilter,
       };
 
     case "ORDER_BY_NAME":
-      let sortedArr = [];
-      payload === "asc"
-        ? state.recipes.sort((a, b) => {
-            if (a.name > b.name) return 1;
-            if (b.name > a.name) return -1;
-            return 0;
-          })
-        : state.recipes.sort((a, b) => {
-            if (a.name > b.name) return -1;
-            if (b.name > a.name) return 1;
-            return 0;
-          });
+      let sortedArr =
+        payload === "asc"
+          ? state.recipes.sort((a, b) => {
+              if (a.name > b.name) return 1;
+              if (b.name > a.name) return -1;
+              return 0;
+            })
+          : state.recipes.sort((a, b) => {
+              if (a.name > b.name) return -1;
+              if (b.name > a.name) return 1;
+              return 0;
+            });
       return {
         ...state,
         recipes: sortedArr,
       };
     case "ORDER_BY_PUNTUATION":
-      let sorted = [];
-      payload === "asc"
-        ? state.recipes.sort((a, b) => {
-            if (a.spoonacularScore > b.spoonacularScore) return 1;
-            if (b.spoonacularScore > a.spoonacularScore) return -1;
-            return 0;
-          })
-        : state.recipes.sort((a, b) => {
-            if (a.spoonacularScore > b.spoonacularScore) return -1;
-            if (b.spoonacularScore > a.spoonacularScore) return 1;
-            return 0;
-          });
+      let sorted =
+        payload === "numAsc"
+          ? state.recipes.sort((a, b) => {
+              return a.puntuation - b.puntuation;
+            })
+          : state.recipes.sort((a, b) => {
+              return b.puntuation - a.puntuation;
+            });
       return {
         ...state,
         recipes: sorted,
@@ -70,6 +67,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         recipes: payload,
+      };
+
+    case "GET_RECIPE_DETAIL":
+      return {
+        ...state,
+        detail: payload,
       };
     default:
       return state;
