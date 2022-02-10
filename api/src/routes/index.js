@@ -114,10 +114,9 @@ router.get("/types", async (req, res) => {
   const dietApi = await axios.get(
     `https://api.spoonacular.com/recipes/complexSearch?number=100&apiKey=${API_KEY}&addRecipeInformation=true`
   );
-  const diets = dietApi.data.results.map((d) => d.diets);
-  const dietEach = diets.map((el) => {
-    for (let i = 0; i < el.length; i++) return el[i];
-  });
+  const diets = dietApi.data.results.flatMap((d) => d.diets);
+   const dietEach = new Set(diets) 
+  // console.log("dietEach value...", dietEach);
   dietEach.forEach((element) => {
     DietType.findOrCreate({
       where: { name: element },
