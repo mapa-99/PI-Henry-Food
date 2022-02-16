@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getRecipeDetail } from "../redux/actions";
+import "./styles/styles.css"
 
 const Details = () => {
   const { id } = useParams();
@@ -15,9 +16,9 @@ const Details = () => {
   return (
     <div>
       {myRecipe.length > 0 ? (
-        <div>
+        <div className="details">
           <h1>{myRecipe[0].name}</h1>
-          <img src={myRecipe[0].img ? myRecipe[0].img : myRecipe[0].image} />
+          <img src={myRecipe[0].img ? myRecipe[0].img : myRecipe[0].image}  width="200px"/>
           <p>
             <b>Dietas:</b>
           </p>

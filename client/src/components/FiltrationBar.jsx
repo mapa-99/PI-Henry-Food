@@ -1,5 +1,5 @@
 import React from "react";
-// import SearchBar from "./SearchBar";
+import SearchBar from "./SearchBar";
 import "./styles/styles.css";
 
 const FiltrationBar = ({
@@ -10,6 +10,7 @@ const FiltrationBar = ({
 }) => {
   return (
     <div className="filtration">
+      <SearchBar/>
       <b>Ordenar/filtrar por: </b>
       <div style={{ display: "inline-flex" }}>
         <div>

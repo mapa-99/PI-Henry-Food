@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getNameRecipes } from "../redux/actions";
 const SearchBar = () => {
   const dispatch = useDispatch();
-  const allRecipes = useSelector((state) => state.recipes);
+  // const allRecipes = useSelector((state) => state.recipes);
   const [name, setName] = useState("");
 
   const handleInputChange = (event) => {

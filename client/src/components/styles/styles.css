@@ -26,7 +26,7 @@
   box-shadow: 5px 5px 8px black;
 }
 .create-button:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 .filtration {
@@ -42,16 +42,6 @@
   width: 650px;
 }
 
-/* style={{
-        
-
-  verticalAlign: "middle",
-  padding: "1.2rem",
-  textAlign: "center",
-  color: "white",
-  fontWeight: "bold",
-}} */
-
 .form-container {
   background-color: #7e0000;
   border-radius: 20px;
@@ -62,4 +52,29 @@
   text-align: center;
   width: 600px;
   /* right:500px; */
+}
+.details {
+  background-color: #002e6b;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+  margin: 1.2rem auto;
+  padding: 1.2rem;
+  text-align: center;
+  width: 650px;
+}
+.repeat-button {
+  background-color: #7e0000;
+  border: none;
+  border-radius: 15px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0.7rem;
+  padding: 0.7rem;
+  box-shadow: 5px 5px 8px black;
+  border: 1px solid white;
+}
+.repeat-button:hover {
+  transform: scale(1.1);
 }
