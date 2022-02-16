@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getDiets, postRecipe } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import "./styles/styles.css"
 
 const validation = (input) => {
   let errors = {};
@@ -77,19 +78,26 @@ const RecipeForm = () => {
     });
   };
   return (
-    <div>
+    <div
+     className="form-container"
+    >
       <Link to="/home">
         <button>Volver</button>
       </Link>
       <h1>Crea tu receta super deliciosa</h1>
       <form>
         <div>
-          <label>Nombre: </label>
+          <label>
+            <p>
+              <b>Nombre de la receta:</b>
+            </p>
+          </label>
           <input
             type="text"
             value={input.name}
             name="name"
             onChange={handleChange}
+            size="50"
           />
           {errors.name && (
             <p>
@@ -97,28 +105,47 @@ const RecipeForm = () => {
             </p>
           )}
         </div>
-        <div>
-          <label>Puntuación: </label>
-          <input
-            type="number"
-            value={input.puntuation}
-            name="puntuation"
-            onChange={handleChange}
-          />
+        <div style={{ display: "inline-flex" }}>
+          <div>
+            <label>
+              <p>
+                <b>Puntuación</b>
+              </p>
+            </label>
+            <input
+              type="number"
+              value={input.puntuation}
+              name="puntuation"
+              
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label>
+              <p>
+                <b>url de la Imagen de la receta:</b>
+              </p>{" "}
+            </label>
+            <input
+              type="text"
+              value={input.image}
+              name="image"
+            
+
+              onChange={handleChange}
+            />
+          </div>
         </div>
         <div>
-          <label>url de la Imagen de la receta: </label>
-          <input
-            type="text"
-            value={input.image}
-            name="image"
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Resumen: </label>
+          <label>
+            <p>
+              <b>Resumen:</b>
+            </p>{" "}
+          </label>
           <textarea
             value={input.summary}
+            rows="5"
+            cols="50"
             name="summary"
             onChange={handleChange}
           />
@@ -129,9 +156,15 @@ const RecipeForm = () => {
           )}
         </div>
         <div>
-          <label>Paso a paso: </label>
+          <label>
+            <p>
+              <b>Paso a paso:</b>
+            </p>{" "}
+          </label>
           <textarea
             value={input.stepByStep}
+            rows="5"
+            cols="50"
             name="stepByStep"
             onChange={handleChange}
           />
@@ -150,8 +183,12 @@ const RecipeForm = () => {
             </label>
           ))}
         </div> */}
+        <label>
+          <p>
+            <b>Tipo de dieta a la que pertenece:</b>
+          </p>
+        </label>
         <select onChange={(event) => handleSelect(event)}>
-          <option value="all"> Todas</option>
           {diets.map((diet) => (
             <option value={diet.name}>{diet.name}</option>
           ))}
@@ -161,12 +198,12 @@ const RecipeForm = () => {
           {input.dietType.map((element) => (
             <>
               <b>{element}</b>
-              <button onClick={() => handleDelete(e)}>✖</button>
+              <button onClick={handleDelete}>✖</button>
             </>
           ))}
         </p>
 
-        <button type="submit" onClick={(event) => handleSubmit(event)}>
+        <button  className="create-button" type="submit" onClick={(event) => handleSubmit(event)}>
           Crear receta!
         </button>
       </form>

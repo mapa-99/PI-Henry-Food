@@ -1,7 +1,15 @@
 .App {
   text-align: center;
+ 
 }
-
+body{
+  background-image: url("./assets/wallhaven-39mppy.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

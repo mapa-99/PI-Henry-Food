@@ -1,31 +1,39 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { getNameRecipe } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getNameRecipes } from "../redux/actions";
 const SearchBar = () => {
   const dispatch = useDispatch();
+  const allRecipes = useSelector((state) => state.recipes);
   const [name, setName] = useState("");
 
   const handleInputChange = (event) => {
     event.preventDefault();
     setName(event.target.value);
-    console.log(name);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(getNameRecipe(name));
+    if (name) {
+      dispatch(getNameRecipes(name));
+      setName("");
+    }
   };
   return (
-    <div>
-      <h1>Mi super Search bar!</h1>
+    <div style={{ margin: "1.2rem" }}>
       <input
         type="text"
-        placeholder="Buscar receta por el nombre"
+        placeholder="Buscar receta.."
+        size="50"
+        style={{ fontSize: "15px" }}
         onChange={(event) => handleInputChange(event)}
       />
-      <button type="submit" onSubmit={(event) => handleSubmit(event)}>
-        🔍
+      <button
+        style={{ width:"50px"}}
+        type="submit"
+        onClick={(event) => handleSubmit(event)}
+      >
+         🔍
       </button>
     </div>
   );

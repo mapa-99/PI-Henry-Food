@@ -1,4 +1,5 @@
 import React from "react";
+import "./styles/styles.css";
 
 const Pagination = ({ recipesPerPage, allRecipes, paginado }) => {
   const pageNumbers = [];
@@ -6,16 +7,18 @@ const Pagination = ({ recipesPerPage, allRecipes, paginado }) => {
     pageNumbers.push(i + 1);
 
   return (
-    <nav>
+    <div className="pagination">
       <ul>
         {pageNumbers &&
           pageNumbers.map((num) => (
             <li key={num}>
-              <button onClick={() => paginado(num)}>{num}</button>
+              <button className="button-pag" onClick={() => paginado(num)}>
+                {num}
+              </button>
             </li>
           ))}
       </ul>
-    </nav>
+    </div>
   );
 };
 

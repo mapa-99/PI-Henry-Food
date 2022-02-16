@@ -63,7 +63,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         recipes: sorted,
       };
-    case "GET_NAME_RECIPE":
+    case "GET_NAME_RECIPES ":
       return {
         ...state,
         recipes: payload,

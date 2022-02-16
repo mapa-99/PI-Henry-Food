@@ -9,9 +9,13 @@ import {
   getDiets,
 } from "../redux/actions";
 import { Link } from "react-router-dom";
-import Card from "./Card";
+// import Card from "./Card";
 import Pagination from "./Pagination";
 import SearchBar from "./SearchBar";
+// import { plate } from "../data";
+import GridCards from "./GridCards";
+import FiltrationBar from "./FiltrationBar";
+import "./styles/styles.css";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -56,56 +60,51 @@ const Home = () => {
   };
   return (
     <div>
-      <Link to="/recipe">Crear receta bien mela</Link>
-      <h1>Recetas melisisisisisisisisisimas</h1>
-      <button onClick={handleClick}>Cargar las Recetas...</button>
-      {/* TODO:
-        - Botones/Opciones para filtrar por por tipo de dieta
-        - Botones/Opciones para ordenar tanto ascendentemente como descendentemente las recetas por orden alfabético y por puntuación
-        - Paginado para ir buscando y mostrando las siguientes recetas, 9 recetas por pagina, mostrando las primeros 9 en la primer pagina. */}
-      <div>
-        {/*Por nombre */}
-        <p>Ordenar por...</p>
-        <p>Nombre Ascendente/Descendente</p>
-
-        <select onChange={(e) => handleSort(e)}>
-          <option value="asc">Ascendente (nombre)</option>
-          <option value="desc">Descendente (nombre)</option>
-        </select>
-        {/* Por puntuación */}
-        <p>Puntuación</p>
-
-        <select onChange={(e) => handleSortPuntuation(e)}>
-          <option value="numAsc">Ascendente</option>
-          <option value="numDesc">Descendente</option>
-        </select>
-        <p>Filtrar por Dieta</p>
-
-        <select onChange={(e) => handleFilterDiet(e)}>
-          <option value="all">Todas</option>
-          {diets.map((diet) => (
-            <option value={diet.name} key={diet.id}>
-              {diet.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <Pagination
-        allRecipes={allRecipes.length}
-        paginado={paginado}
-        recipesPerPage={recipesPerPage}
-      />
-      <SearchBar />
-      {currentRecipes &&
-        currentRecipes.map((rec) => {
-          return (
-            <div key={rec.id}>
-              <Link to={"/home/" + rec.id}>
-                <Card name={rec.name} image={rec.image} diet={rec.dietType} />
-              </Link>
-            </div>
-          );
-        })}
+      {/* {allRecipes.length > 0 ? ( */}
+        <>
+          <h1 style={{ fontSize: "50px", color: "#e09200" }}>
+            Las mejores recetas!
+          </h1>
+          <Link to="/recipe">
+            <button className="create-button">Quiero crear una receta</button>
+          </Link>
+          <button
+            onClick={handleClick}
+            style={{
+              fontWeight: "bold",
+              padding: "0.5rem",
+              borderRadius: "10px",
+              marginLeft: "15px",
+              fontSize: "16px",
+            }}
+          >
+            🔁 Cargar todas las Recetas
+          </button>
+          <br />
+          <SearchBar />
+          <FiltrationBar
+            handleSort={(e) => handleSort(e)}
+            handleSortPuntuation={(e) => handleSortPuntuation(e)}
+            diets={diets}
+            handleFilterDiet={(e) => handleFilterDiet(e)}
+          />
+          <Pagination
+            allRecipes={allRecipes.length}
+            paginado={paginado}
+            recipesPerPage={recipesPerPage}
+          />
+       
+          <GridCards recipes={currentRecipes} />
+        </>
+       {/* ) : (
+         <iframe
+      //     src="https://giphy.com/embed/3o7bu8sRnYpTOG1p8k" */}
+           {/* width="480"
+           height="480"
+           frameBorder="0"
+           class="giphy-embed"
+         />
+       )} */}
     </div>
   );
 };

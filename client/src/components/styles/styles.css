@@ -1,0 +1,65 @@
+.pagination li {
+  padding: 1.2rem;
+  font-size: 18px;
+  display: inline-flex;
+  text-decoration: none;
+}
+
+.button-pag {
+  border-radius: 10px;
+  font-size: 18px;
+  text-align: center;
+  width: 40px;
+}
+.button-pag:hover {
+  transform: scale(1.2);
+}
+.create-button {
+  background-color: #d6b600;
+  border: none;
+  border-radius: 15px;
+  color: #6200ad;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0.7rem;
+  padding: 0.7rem;
+  box-shadow: 5px 5px 8px black;
+}
+.create-button:hover {
+  transform: scale(1.2);
+}
+
+.filtration {
+  background-color: #7e0000;
+  border-radius: 1.2rem;
+  border: 2px solid white;
+  color: white;
+  margin: 20px auto;
+  padding: 0.8rem;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 650px;
+}
+
+/* style={{
+        
+
+  verticalAlign: "middle",
+  padding: "1.2rem",
+  textAlign: "center",
+  color: "white",
+  fontWeight: "bold",
+}} */
+
+.form-container {
+  background-color: #7e0000;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+  margin: 1.2rem auto;
+  padding: 1.2rem;
+  text-align: center;
+  width: 600px;
+  /* right:500px; */
+}

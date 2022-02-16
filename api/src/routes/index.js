@@ -4,14 +4,14 @@ const { Router } = require("express");
 
 const axios = require("axios");
 const { Recipe, DietType } = require("../db");
-const { API_KEY } = process.env;
+const { API_KEY, API_KEY2 } = process.env;
 //TODO: Modularizar esta vuelta
 
 const router = Router();
 
 const getApiInfo = async () => {
   const apiUrl = await axios.get(
-    `https://api.spoonacular.com/recipes/complexSearch?number=100&apiKey=${API_KEY}&addRecipeInformation=true`
+    `https://api.spoonacular.com/recipes/complexSearch?number=100&apiKey=${API_KEY2}&addRecipeInformation=true`
   );
   const info = await apiUrl.data.results.map((element) => {
     return {
@@ -57,7 +57,7 @@ router.get("/recipes", async (req, res) => {
       rec.name.toLowerCase().includes(name.toLowerCase())
     );
     recipeName.length
-      ? res.status(200).send(recipeName)
+      ? res.status(200).send([recipeName])
       : res.status(404).send("No existe ninguna receta con ese nombre");
   } else res.status(200).send(recipesTotal);
 });
@@ -112,10 +112,10 @@ router.get("/recipes/:id", async (req, res) => {
 //Buscar documentación del array.flat()
 router.get("/types", async (req, res) => {
   const dietApi = await axios.get(
-    `https://api.spoonacular.com/recipes/complexSearch?number=100&apiKey=${API_KEY}&addRecipeInformation=true`
+    `https://api.spoonacular.com/recipes/complexSearch?number=100&apiKey=${API_KEY2}&addRecipeInformation=true`
   );
   const diets = dietApi.data.results.flatMap((d) => d.diets);
-   const dietEach = new Set(diets) 
+  const dietEach = new Set(diets);
   // console.log("dietEach value...", dietEach);
   dietEach.forEach((element) => {
     DietType.findOrCreate({

@@ -14,12 +14,12 @@ export function getRecipes() {
   };
 }
 
-export function getNameRecipe(name) {
+export function getNameRecipes(name) {
   return async function (dispatch) {
     try {
       var info = await axios.get(`http://localhost:3001/recipes?name=${name}`);
       return dispatch({
-        type: "GET_NAME_RECIPE",
+        type: "GET_NAME_RECIPES",
         payload: info.data,
       });
     } catch (error) {
