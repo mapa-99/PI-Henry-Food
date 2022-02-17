@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getRecipeDetail } from "../redux/actions";
-import "./styles/styles.css"
+import "./styles/styles.css";
 
 const Details = () => {
   const { id } = useParams();
@@ -17,8 +17,18 @@ const Details = () => {
     <div>
       {myRecipe.length > 0 ? (
         <div className="details">
+          <Link to="/home">
+            <button>Volver</button>
+          </Link>
           <h1>{myRecipe[0].name}</h1>
-          <img src={myRecipe[0].img ? myRecipe[0].img : myRecipe[0].image}  width="200px"/>
+          <img
+            src={
+              myRecipe[0].img
+                ? "https://th.bing.com/th/id/R.421804faf23fcb4aa4fbc3c49dde34b2?rik=VyqDrXD3vw4vKg&pid=ImgRaw&r=0"
+                : myRecipe[0].image
+            }
+            width="450px"
+          />
           <p>
             <b>Dietas:</b>
           </p>
@@ -34,7 +44,7 @@ const Details = () => {
           <p>
             <b>Paso a paso</b>
           </p>
-          <p>{myRecipe[0].stepByStep}</p>
+          <span>{myRecipe[0].stepByStep}</span>
           <div style={{ display: "inline-flex" }}>
             <div style={{ padding: "20px" }}>
               <p>
@@ -51,11 +61,8 @@ const Details = () => {
           </div>
         </div>
       ) : (
-        <img src="https://tenor.com/view/eat-it-gif-20209490" />
+        <iframe src="https://tenor.com/view/eat-it-gif-20209490" />
       )}
-      <Link to="/home">
-        <button>Volver</button>
-      </Link>
     </div>
   );
 };

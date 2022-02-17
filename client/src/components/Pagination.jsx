@@ -3,8 +3,8 @@ import "./styles/styles.css";
 
 const Pagination = ({ recipesPerPage, allRecipes, paginado }) => {
   const pageNumbers = [];
-  for (let i = 0; i < Math.ceil(allRecipes / recipesPerPage); i++)
-    pageNumbers.push(i + 1);
+  for (let i = 0; i <= Math.ceil(allRecipes / recipesPerPage); i++)
+    pageNumbers.push(i);
 
   return (
     <div className="pagination">

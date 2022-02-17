@@ -63,7 +63,8 @@ function rootReducer(state = initialState, action) {
         ...state,
         recipes: sorted,
       };
-    case "GET_NAME_RECIPES ":
+    case "GET_NAME_RECIPES":
+      console.log("El payload del reducer", payload);
       return {
         ...state,
         recipes: payload,

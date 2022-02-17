@@ -31,8 +31,13 @@ const Home = () => {
   // console.log("diets value...", diets);
   useEffect(() => {
     dispatch(getDiets());
-    dispatch(getRecipes());
-  }, []);
+    // dispatch(getRecipes());
+  }, [dispatch]);
+  useEffect(() => {
+    if (!allRecipes.length) {
+      dispatch(getRecipes());
+    }
+  }, [dispatch, allRecipes]);
 
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -61,41 +66,40 @@ const Home = () => {
   return (
     <div>
       {/* {allRecipes.length > 0 ? ( */}
-      <>
-        <h1 style={{ fontSize: "50px", color: "#e09200" }}>
-          Las mejores recetas!
-        </h1>
-        <Link to="/recipe">
-          <button className="create-button">Quiero crear una receta</button>
-        </Link>
-        <button onClick={handleClick} className="repeat-button">
-          🔁 Cargar todas las Recetas
-        </button>
-        <br />
-        {/* <SearchBar /> */}
-        <FiltrationBar
-          handleSort={(e) => handleSort(e)}
-          handleSortPuntuation={(e) => handleSortPuntuation(e)}
-          diets={diets}
-          handleFilterDiet={(e) => handleFilterDiet(e)}
-        />
-        <Pagination
-          allRecipes={allRecipes.length}
-          paginado={paginado}
-          recipesPerPage={recipesPerPage}
-        />
+        <>
+          <h1 style={{ fontSize: "50px", color: "#e09200" }}>
+            Las mejores recetas!
+          </h1>
+          <Link to="/recipe">
+            <button className="create-button">Quiero crear una receta</button>
+          </Link>
+          <button onClick={handleClick} className="repeat-button">
+            🔁 Cargar todas las Recetas
+          </button>
+          <br />
+          {/* <SearchBar /> */}
+          <FiltrationBar
+            handleSort={(e) => handleSort(e)}
+            handleSortPuntuation={(e) => handleSortPuntuation(e)}
+            diets={diets}
+            handleFilterDiet={(e) => handleFilterDiet(e)}
+          />
+          <Pagination
+            allRecipes={allRecipes.length}
+            paginado={paginado}
+            recipesPerPage={recipesPerPage}
+          />
 
-        <GridCards recipes={currentRecipes} />
-      </>
+          <GridCards recipes={currentRecipes} />
+        </>
       {/* ) : (
-         <iframe
-      //     src="https://giphy.com/embed/3o7bu8sRnYpTOG1p8k" */}
-      {/* width="480"
-           height="480"
-           frameBorder="0"
-           class="giphy-embed"
-         />
-       )} */}
+        <iframe */}
+          {/* src="https://giphy.com/embed/3o7bu8sRnYpTOG1p8k"
+          width="480"
+          height="480"
+          frameBorder="0"
+        /> */}
+      {/* )} */}
     </div>
   );
 };

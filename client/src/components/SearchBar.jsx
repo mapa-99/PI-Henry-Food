@@ -14,6 +14,7 @@ const SearchBar = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    // console.log(name);
     if (name) {
       dispatch(getNameRecipes(name));
       setName("");
@@ -23,17 +24,13 @@ const SearchBar = () => {
     <div style={{ margin: "1.2rem" }}>
       <input
         type="text"
-        placeholder="Buscar receta.."
+        placeholder="Buscar receta..."
         size="50"
         style={{ fontSize: "15px" }}
-        onChange={(event) => handleInputChange(event)}
+        onChange={handleInputChange}
       />
-      <button
-        style={{ width:"50px"}}
-        type="submit"
-        onClick={(event) => handleSubmit(event)}
-      >
-         🔍
+      <button style={{ width: "50px" }} type="submit" onClick={handleSubmit}>
+        🔍
       </button>
     </div>
   );

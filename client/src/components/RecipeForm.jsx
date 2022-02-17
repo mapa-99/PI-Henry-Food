@@ -3,20 +3,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { getDiets, postRecipe } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import "./styles/styles.css"
+import "./styles/styles.css";
 
 const validation = (input) => {
   let errors = {};
   if (!input.name) errors.name = "El nombre es obligatorio!";
-  else if (!input.summary)
-    errors.summary = "El resumen de la receta es obligatoria!";
+  else if (!input.summary) errors.summary = "La receta debe tener un resumen!";
+
   return errors;
 };
 const RecipeForm = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
   const diets = useSelector((state) => state.diets);
-
+  const [validate, setValidate] = useState(null);
   const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
     name: "",
@@ -56,20 +56,25 @@ const RecipeForm = () => {
       dietType: [...input.dietType, event.target.value],
     });
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(input);
-    dispatch(postRecipe(input));
-    alert("Receta Creada exitosamente!");
-    setInput({
-      name: "",
-      summary: "",
-      puntuation: 0,
-      dietType: [],
-      image: "",
-      stepByStep: "",
-    });
-    history("/home");
+    if (input.name && input.summary) {
+      console.log(input);
+      dispatch(postRecipe(input));
+      alert("Receta Creada exitosamente!");
+      setInput({
+        name: "",
+        summary: "",
+        puntuation: 0,
+        dietType: [],
+        image: "",
+        stepByStep: "",
+      });
+      history("/home");
+    } else {
+      setValidate(false);
+    }
   };
   const handleDelete = (element) => {
     setInput({
@@ -78,18 +83,16 @@ const RecipeForm = () => {
     });
   };
   return (
-    <div
-     className="form-container"
-    >
+    <div className="form-container">
       <Link to="/home">
         <button>Volver</button>
       </Link>
       <h1>Crea tu receta super deliciosa</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div>
           <label>
             <p>
-              <b>Nombre de la receta:</b>
+              <b>Nombre de la receta: *</b>
             </p>
           </label>
           <input
@@ -116,22 +119,19 @@ const RecipeForm = () => {
               type="number"
               value={input.puntuation}
               name="puntuation"
-              
               onChange={handleChange}
             />
           </div>
           <div>
             <label>
               <p>
-                <b>url de la Imagen de la receta:</b>
+                <b>url de la Imagen de la receta: 📷 </b>
               </p>{" "}
             </label>
             <input
               type="text"
               value={input.image}
               name="image"
-            
-
               onChange={handleChange}
             />
           </div>
@@ -139,7 +139,7 @@ const RecipeForm = () => {
         <div>
           <label>
             <p>
-              <b>Resumen:</b>
+              <b>Resumen: *</b>
             </p>{" "}
           </label>
           <textarea
@@ -149,12 +149,12 @@ const RecipeForm = () => {
             name="summary"
             onChange={handleChange}
           />
-          {errors.summary && (
-            <p>
-              <b>{errors.summary}</b>
-            </p>
-          )}
         </div>
+        {errors.summary && (
+          <p>
+            <b>{errors.summary}</b>
+          </p>
+        )}
         <div>
           <label>
             <p>
@@ -170,19 +170,7 @@ const RecipeForm = () => {
           />
         </div>
         <br />
-        {/* <div>
-          {diets.map((diet) => (
-            <label key={diet.id}>
-              <input
-                type="checkbox"
-                name={diet.name}
-                value={diet.name}
-                onChange={(e) => handleChange(e)}
-              />
-              {diet.name}
-            </label>
-          ))}
-        </div> */}
+
         <label>
           <p>
             <b>Tipo de dieta a la que pertenece:</b>
@@ -198,14 +186,19 @@ const RecipeForm = () => {
           {input.dietType.map((element) => (
             <>
               <b>{element}</b>
-              <button onClick={handleDelete}>✖</button>
+              <button onClick={(event) => handleDelete(event)}>✖</button>
             </>
           ))}
         </p>
 
-        <button  className="create-button" type="submit" onClick={(event) => handleSubmit(event)}>
+        <button className="create-button" type="submit">
           Crear receta!
         </button>
+        {validate === false && (
+          <div className="alert-container">
+            <h2>🚧 Debes completar los datos obligatorios 🚧</h2>
+          </div>
+        )}
       </form>
     </div>
   );

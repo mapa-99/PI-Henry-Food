@@ -11,9 +11,11 @@
   text-align: center;
   width: 40px;
 }
-.button-pag:hover {
+.button-pag:hover,.button-pag:focus {
+  background-color: gray;
   transform: scale(1.2);
 }
+
 .create-button {
   background-color: #d6b600;
   border: none;
@@ -63,6 +65,9 @@
   text-align: center;
   width: 650px;
 }
+.details li{
+  text-decoration: none;
+}
 .repeat-button {
   background-color: #7e0000;
   border: none;
@@ -77,4 +82,12 @@
 }
 .repeat-button:hover {
   transform: scale(1.1);
+}
+
+.alert-container {
+  background-color: white;
+  border-radius: 10px;
+  color: red;
+  margin: 0.2rem;
+  padding: 0.2rem;
 }

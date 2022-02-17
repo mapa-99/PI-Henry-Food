@@ -18,10 +18,10 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
     },
     puntuation: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.INTEGER,
     },
     healthyFoodLevel: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.INTEGER,
     },
     stebByStep: {
       type: DataTypes.TEXT,
@@ -30,7 +30,7 @@ module.exports = (sequelize) => {
     //   type: DataTypes.STRING,
     // },
     image: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     createdByDb: {
